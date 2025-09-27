@@ -11,7 +11,7 @@ namespace ProjectFile
     {
         [SerializeField]
         private string m_guid = System.Guid.NewGuid().ToString();
-        public string Guid { get {return m_guid;} }
+        public string Guid { get {return m_guid;}}
 
         public string ProjectName;
     }
