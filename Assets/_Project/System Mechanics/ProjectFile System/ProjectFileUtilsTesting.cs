@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using ProjectFile;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using static ProjectFile.ProjectFileUtilities;
 
 public class ProjectFileUtilsTesting : MonoBehaviour
 {
@@ -10,18 +9,9 @@ public class ProjectFileUtilsTesting : MonoBehaviour
     private ProjectFileHeader projFile;
 
     [Button]
-    public void PrintAllMinimal()
-    {
-
-        MinimalFileInfo[] myMFIs = GetMinimalFileInfos();
-        foreach (var mfi in myMFIs)
-            Debug.Log("guid: " + mfi.Guid + "\nname: " + mfi.ProjectName);
-    }
-
-    [Button]
     public async Task SaveFile()
     {
-        bool result = await SerializeFile(projFile);
+        bool result = await ProjectFileUtilities.SerializeFile(projFile);
         Debug.Log("result: " + result);
     }
 
@@ -29,19 +19,29 @@ public class ProjectFileUtilsTesting : MonoBehaviour
     public void GetFile(string guid)
     {
         Debug.Log("Ran!");
-        DeserializeFile(guid, projFile);
+        ProjectFileUtilities.DeserializeFile(guid, projFile);
     }
 
     [Button]
     public void DeleteFile1(string guid)
     {
-        DeleteFile(guid);
+        ProjectFileUtilities.DeleteFile(guid);
         Debug.Log("Attempted to delete the file by guid: " + guid + "!");
     }
 
     [Button]
-    public void ResetMIS_Data()
+    public void PullAll()
     {
-        GenerateMIS_DataFile();
+        QuickPullObject[] quickPull = ProjectFileUtilities.QuickPullAll();
+        foreach (QuickPullObject obj in quickPull)
+        {
+            Debug.Log(obj.ProjectName + $"\n{obj.Guid}");
+        }
+    }
+
+    [Button]
+    public void GenerateQuickPullData()
+    {
+        ProjectFileUtilities.RegenerateQuickPullData();
     }
 }

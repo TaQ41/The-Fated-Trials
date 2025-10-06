@@ -7,5 +7,8 @@ using ProjectFile;
 [CreateAssetMenu(fileName = "ProjectFileHeader", menuName = "Scriptable Objects/ProjectFileHeader")]
 public class ProjectFileHeader : ScriptableObject
 {
-    public Identification Identification;
+    public Identification IdentificationData;
+    public Player PlayerData;
+    public PendingProgressEvents PendingProgressEventsData;
+
 }
