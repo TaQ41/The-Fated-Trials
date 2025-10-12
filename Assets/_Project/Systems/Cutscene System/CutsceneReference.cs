@@ -1,9 +1,10 @@
-namespace CutscenePlayer
+using System.Collections.Generic;
+using static GenericSceneLoader.Locale.LocaleFinder;
+
+namespace CutsceneSystem
 {
     /// <summary>
     /// Contains values that specify the cutscene to play when its constraints pass.
-    /// Current Constraints:
-    /// * PlayableLocales - In which villages the cutscene may be played.
     /// </summary>
     [System.Serializable]
     public struct CutsceneReference
@@ -16,6 +17,6 @@ namespace CutscenePlayer
         /// <summary>
         /// The village locales that this cutscene can be played at, if this constraint isn't met, the cutscene shouldn't play.
         /// </summary>
-        public LocaleFinder.VillageLocales PlayableLocales;
+        public VillageLocales PlayableLocalesConstraint;
     }
 }

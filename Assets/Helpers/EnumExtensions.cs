@@ -44,7 +44,7 @@ namespace Helpers
         /// <summary>
         /// Determines if an enum flag's underlying bit value is a power of 2. (Only a single 1 in a binary number. 1000 0100 0010 0001)
         /// This proves whether the flag is a single bit or not (eg. excludes flags that are c = a | b).
-        /// Uses a common bitwise trick to determine that proof.
+        /// Uses a common bitwise trick to determine that proof.z
         /// </summary>
         /// <param name="flag">The flag tested to determine if it is a single bit value.</param>
         /// <returns>Whether or not the provided flag value was a single bit.</returns>

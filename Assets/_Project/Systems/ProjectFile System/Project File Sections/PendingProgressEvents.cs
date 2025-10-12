@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace ProjectFile
 {
     /// <summary>
@@ -9,6 +11,7 @@ namespace ProjectFile
     public class PendingProgressEvents
     {
         // Initial Cutscenes
+        public List<CutsceneSystem.CutsceneReference> InitialCutscenes;
 
         // Character Pending Dialogue/requests, Character dialogue stages
 
