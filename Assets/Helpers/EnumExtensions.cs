@@ -12,7 +12,7 @@ namespace Helpers
     {
         /// <summary>
         /// Convert a flagged enum into a collection of strings of each flagged member name.
-        /// Use this to prevent members that include other members from culling the members that they wrap.
+        /// Use this to prevent members that include other members from hiding the members that they wrap.
         /// (IE. C = A | B; this(C) = 'A', 'B' instead of 'C')
         /// </summary>
         /// <param name="flaggedEnum">The flagged enum being operated on.</param>

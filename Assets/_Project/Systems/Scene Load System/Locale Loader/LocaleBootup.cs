@@ -38,8 +38,7 @@ namespace GenericSceneLoader.Locale
         private void UnloadBootup()
         {
             m_cutscenePlayer.completed -= UnloadBootup;
-            SceneManager.LoadSceneAsync(m_sceneName, LoadSceneMode.Additive);
-            SceneManager.UnloadSceneAsync(gameObject.scene);
+            SceneManager.LoadSceneAsync(m_sceneName, LoadSceneMode.Single);
         }
     }
 }
