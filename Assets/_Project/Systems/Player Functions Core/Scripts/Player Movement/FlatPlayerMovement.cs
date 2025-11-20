@@ -1,47 +1,42 @@
-using PlayerFunctions;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Movement
+namespace PlayerFunctionsCore
 {
-    /// <summary>
-    /// Directly applies movement to a rigidbody on a 2d axis. This is the base WASD movement.
-    /// </summary>
     public class FlatPlayerMovement : MonoBehaviour
     {
-        private GameInput gameInput;
+        private PlayerFunctions.GameInput gameInput;
 
         [SerializeField]
-        private Rigidbody PlayerRb;
+        private PlayerCamera playerCamera;
+
+        [SerializeField]
+        private Rigidbody playerRb;
         private Vector2 m_movement;
 
-        
-        [BoxGroup("Walk Movement"), HorizontalGroup("Walk")]
-        public float MaxMoveSpeed_Walk;
+        // Controls
+        [Tooltip ("")]
+        public float MoveSpeed_Walk;
 
-        [HorizontalGroup("Walk")]
-        public float WalkSpeedBuildupRate;
+        [Tooltip ("")]
+        public float MoveSpeedChangeRate;
 
-        [BoxGroup("Run Movement"), HorizontalGroup("Run")]
-        public float MaxMoveSpeed_Run;
-
-        [HorizontalGroup("Run")]
-        public float RunSpeedBuildupRate;
+        public bool toggle;
 
         void OnEnable()
         {
             gameInput = new();
             gameInput.PlayerFunctions.Move.Enable();
             gameInput.PlayerFunctions.Move.performed += OnPlayerMove;
-            gameInput.PlayerFunctions.Move.canceled += OnPlayerStopMove;
+            gameInput.PlayerFunctions.Move.canceled += OnPlayerNoMove;
+
         }
 
         void OnDisable()
         {
             gameInput.PlayerFunctions.Move.Disable();
             gameInput.PlayerFunctions.Move.performed -= OnPlayerMove;
-            gameInput.PlayerFunctions.Move.canceled -= OnPlayerStopMove;
+            gameInput.PlayerFunctions.Move.canceled -= OnPlayerNoMove;
         }
 
         void OnPlayerMove(InputAction.CallbackContext context)
@@ -49,22 +44,34 @@ namespace Movement
             m_movement = context.ReadValue<Vector2>();
         }
 
-        void OnPlayerStopMove(InputAction.CallbackContext context)
+        void OnPlayerNoMove(InputAction.CallbackContext context)
         {
-            m_movement = new Vector2(0, 0);
-            
+            m_movement = Vector2.zero;
+        }
+
+        /// <summary>
+        /// Get a normalized direction from the playerCamera's current orientation and the movement input.
+        /// WASD moves the rigidbody forward, left, and right based on the camera's y angle.
+        /// </summary>
+        /// <returns>A normalized Vector3 direction.</returns>
+        private Vector3 GetCameraRelativeDirection()
+        {
+            Quaternion quaternion = Quaternion.Euler(new Vector3(0f, playerCamera.Orientation, 0f));
+            return quaternion * new Vector3(m_movement.x, 0f, m_movement.y);
         }
 
         void FixedUpdate()
         {
-            //PlayerRb.linearVelocity = moveSpeed * new Vector3(m_movement.x, 0f, m_movement.y).normalized;
+            if (m_movement == Vector2.zero)
+                return;
+
+            playerRb.AddForce(10f * MoveSpeedChangeRate * GetCameraRelativeDirection(), ForceMode.Force);
+
+            playerRb.linearVelocity = new Vector3(
+                Mathf.Clamp(playerRb.linearVelocity.x, -MoveSpeed_Walk, MoveSpeed_Walk),
+                playerRb.linearVelocity.y,
+                Mathf.Clamp(playerRb.linearVelocity.z, -MoveSpeed_Walk, MoveSpeed_Walk)
+            );
         }
     }
-
-    /*
-    Let the player accelerate quickly to walking speed by applying a force. Cap off speed by clamping the velocity and follow
-    orientation movement by the orientation defined in the current camera context. 
-
-
-    */
 }
