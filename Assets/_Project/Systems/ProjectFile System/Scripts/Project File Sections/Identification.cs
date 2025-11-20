@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace ProjectFile
+namespace ProjectFileSystem
 {
     /// <summary>
     /// All information regarding the file and its required properties for utility methods.

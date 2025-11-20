@@ -1,4 +1,4 @@
-namespace ProjectFile
+namespace ProjectFileSystem
 {
     /// <summary>
     /// An object used for concise data collection of each project file.

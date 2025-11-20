@@ -27,7 +27,6 @@ namespace Helpers
 
             #pragma warning restore IDE0047
 
-            List<string> flagNames = new();
             foreach (TEnum flag in Enum.GetValues(typeof(TEnum)))
             {
                 // Exclude the member with the value '0', IE. 'None'
@@ -35,10 +34,8 @@ namespace Helpers
                     continue;
 
                 if (flaggedEnum.HasFlag(flag) && IsFlagSingleBit(flag))
-                    flagNames.Add(flag.ToString());
+                    yield return flag.ToString();
             }
-
-            return flagNames;
         }
 
         /// <summary>

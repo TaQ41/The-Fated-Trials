@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace ProjectFile
+namespace ProjectFileSystem
 {
     /// <summary>
     /// All of the events that are waiting to happen to progress the game. These include the cutscenes that should play and where, the character

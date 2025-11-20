@@ -15,10 +15,10 @@ namespace PlayerFunctionsCore
         private Vector2 m_movement;
 
         // Controls
-        [Tooltip ("")]
+        [Tooltip ("The max linear velocity the player can move in any direction on the x and z components.")]
         public float MoveSpeed_Walk;
 
-        [Tooltip ("")]
+        [Tooltip ("The speed rate in which the player rigidbody can apply force in a different direction and then have the player move in that direction.")]
         public float MoveSpeedChangeRate;
 
         public bool toggle;

@@ -17,6 +17,7 @@ namespace GenericSceneLoader.Locale
         {
             None = 0,
             Main = 1,
+            All = Main
         };
     
         /// <summary>

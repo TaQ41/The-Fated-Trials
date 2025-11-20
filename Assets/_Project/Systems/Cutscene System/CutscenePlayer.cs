@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using GenericSceneLoader.Locale;
-using Unity.Multiplayer.Center.Common;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,8 +17,8 @@ namespace CutsceneSystem
         [SerializeField]
         private ProjectFileHeader projectFile;
 
-        private Queue<CutsceneReference> m_cutscenes = new();
-        private List<CutsceneReference> m_loadedCutscenes = new();
+        private readonly Queue<CutsceneReference> m_cutscenes = new();
+        private readonly List<CutsceneReference> m_loadedCutscenes = new();
         private int m_currentSceneHandle;
         private bool m_isCutscenePlaying;
 
@@ -79,7 +77,7 @@ namespace CutsceneSystem
             foreach (CutsceneReference storedCutscene in m_cutscenes)
             {
                 if (cutscene.CutsceneName.Equals(storedCutscene.CutsceneName))
-                    UnityEngine.Debug.Log("Found same name!");
+                    Debug.Log("Found same name!");
             }
 
             m_cutscenes.Enqueue(cutscene);
@@ -121,17 +119,14 @@ namespace CutsceneSystem
 
         /// <summary>
         /// Checks all the constraints of the provided CutsceneReference and determines if any fail.
+        /// 1. Is the cutscene allowed to be played in the player's current scene?
         /// </summary>
         /// <returns>True on all constraints passing and false on any failing.</returns>
         private bool AreCutsceneConstraintsPassed(CutsceneReference cutscene)
         {
-            if (!LocaleFinder.GetMultipleVillageLocaleSceneNames(cutscene.PlayableLocalesConstraint)
-                             .Contains(projectFile.PlayerData.CurrentVillageLocaleSceneName))
-            {
-                return false;
-            }
+            return LocaleFinder.GetMultipleVillageLocaleSceneNames(cutscene.PlayableLocalesConstraint)
+                                    .Contains(projectFile.PlayerData.CurrentVillageLocaleSceneName);
 
-            return true;
         }
 
         /// <summary>
