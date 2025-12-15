@@ -6,7 +6,7 @@ namespace ItemsCore.Structure
     [System.Serializable]
     public class RuntimeStorageItem : RuntimeMinimalItem, IStorageItem
     {
-        [SerializeField] private int m_maxStack;
+        [SerializeField] private readonly int m_maxStack;
         [SerializeField] private string m_itemType;
 
         public int MaxStack => m_maxStack;

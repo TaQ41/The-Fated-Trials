@@ -12,19 +12,10 @@ namespace ItemsCore.Structure
         public string ItemName => m_itemName;
         public string ImagePath => m_imagePath;
 
+        [Button]
         public virtual IItem CreateRuntimeItem()
         {
             return new RuntimeMinimalItem(m_itemName, m_imagePath);
-        }
-
-        public IEquipmentItem AsEquipmentDef()
-        {
-            return CreateRuntimeItem() as IEquipmentItem;
-        }
-
-        public IStorageItem AsStorageDef()
-        {
-            return CreateRuntimeItem() as IStorageItem;
         }
     }
 }
